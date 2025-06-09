@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function NewPlantForm() {
+function NewPlantForm({ setPlants }) {
   const [formData, setFormData] = useState({
     name: "",
     image: "",
@@ -19,7 +19,11 @@ function NewPlantForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        name: formData.name,
+        image: formData.image,
+        price: formData.price,
+      }),
     })
       .then((response) => response.json())
       .then((newPlant) => {
@@ -30,7 +34,7 @@ function NewPlantForm() {
   return (
     <div className="new-plant-form">
       <h2>New Plant</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
